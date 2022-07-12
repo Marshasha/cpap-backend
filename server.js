@@ -7,6 +7,7 @@ mongoose.connect("mongodb://localhost:27017/cpap_measures");
 
 
 const measuresListSchema = mongoose.Schema({
+    userId : String,
     date : String,
     averageUsage : Number,
     maxPressure : Number,
@@ -41,9 +42,10 @@ app.get('/api/getMeasures', (req, res, next) => {
 
 app.post('/api/addmeasures', (req, res, next)=>{
 
-    const { date, averageUsage, maxPressure, minPressure, pressure95, pressureMax, leakMax, ahi, cai, uai} = req.body
+    const { userId, date, averageUsage, maxPressure, minPressure, pressure95, pressureMax, leakMax, ahi, cai, uai} = req.body
 
     const measureList = new MeasuresList({
+        userId : userId,
         date : date,
         averageUsage : averageUsage,
         maxPressure : maxPressure,
