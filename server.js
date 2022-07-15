@@ -9,7 +9,8 @@ mongoose.connect("mongodb://localhost:27017/cpap_measures");
 const measuresListSchema = mongoose.Schema({
     userId : String,
     date : String,
-    averageUsage : Number,
+    ratioOfUsage: String,
+    averageUsage : String,
     maxPressure : Number,
     minPressure : Number,
     pressure95 : Number,
@@ -31,7 +32,7 @@ app.use('/', (req, res, next)=> {
 app.use(bodyParser.json())
 
 
-app.get('/api/getMeasures', (req, res, next) => {
+app.get('/api2/getMeasures', (req, res, next) => {
 
     MeasuresList.find((err, doc)=>{
         if(err) { return next(err)}
@@ -40,13 +41,14 @@ app.get('/api/getMeasures', (req, res, next) => {
 })
 
 
-app.post('/api/addmeasures', (req, res, next)=>{
+app.post('/api2/addmeasures', (req, res, next)=>{
 
-    const { userId, date, averageUsage, maxPressure, minPressure, pressure95, pressureMax, leakMax, ahi, cai, uai} = req.body
+    const { userId, date, ratioOfUsage, averageUsage, maxPressure, minPressure, pressure95, pressureMax, leakMax, ahi, cai, uai} = req.body
 
     const measureList = new MeasuresList({
         userId : userId,
         date : date,
+        ratioOfUsage : ratioOfUsage,
         averageUsage : averageUsage,
         maxPressure : maxPressure,
         minPressure : minPressure,
@@ -71,4 +73,6 @@ app.post('/api/addmeasures', (req, res, next)=>{
 
 
 const port = process.env.PORT || 8181
-app.listen(port)
+app.listen(port, () => {
+    console.log(`listening on port ${port}`);
+})
