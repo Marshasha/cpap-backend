@@ -19,6 +19,7 @@ const measuresListSchema = mongoose.Schema({
     ahi : Number,
     cai : Number,
     uai : Number,
+    mark : Number,
 });
 
 const MeasuresList = mongoose.model('MeasuresList', measuresListSchema)
@@ -43,7 +44,7 @@ app.get('/api2/getMeasures', (req, res, next) => {
 
 app.post('/api2/addmeasures', (req, res, next)=>{
 
-    const { userId, date, ratioOfUsage, averageUsage, maxPressure, minPressure, pressure95, pressureMax, leakMax, ahi, cai, uai} = req.body
+    const { userId, date, ratioOfUsage, averageUsage, maxPressure, minPressure, pressure95, pressureMax, leakMax, ahi, cai, uai, mark} = req.body
 
     const measureList = new MeasuresList({
         userId : userId,
@@ -58,6 +59,7 @@ app.post('/api2/addmeasures', (req, res, next)=>{
         ahi : ahi,
         cai : cai,
         uai : uai,
+        mark : mark,
     })
 
     measureList.save((err, doc) => {
